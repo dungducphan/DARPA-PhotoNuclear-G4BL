@@ -1,0 +1,28 @@
+*	Photonuclear Simulation for DARPA Proposal
+*
+* 100MeV Electron Beam Impinged on Tungsten Target of 5mm-thick
+* Virtual detectors for Brems gammas
+
+# QGSP_BERT is better for low-energy simulations
+physics QGSP_BERT
+
+# the beam is nominally headed in the +Z direction
+beam gaussian particle=e- nEvents=1.25E7 beamZ=0.0 \
+	sigmaX=0.1 sigmaY=0.1 sigmaXp=0.0 sigmaYp=0.0 \
+	meanMomentum=$EMOM sigmaP=10.0 meanT=0.0 sigmaT=0.0
+
+# the target is a tungsten rod with variable thickness and 3cm in diameter; make it red
+cylinder Target outerRadius=15 length=$THICKNESS material=W color=1,0,0
+place Target z=200
+
+# This virtualdetector catches what comes out of the target in the forward
+# direction; make it green
+virtualdetector DetForward radius=3000 length=1 color=0,1,0
+place DetForward z=250
+
+# BeamVis just shows where the beam comes from
+box BeamVis width=0.1 height=0.1 length=0.1 material=Vacuum color=1,0,0
+place BeamVis z=0
+
+# label the visualization
+label text="Photonuclear Simulation for DARPA" 1200,0,-500
